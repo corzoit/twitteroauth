@@ -96,6 +96,9 @@ class Util
 
         $pairs = [];
         foreach ($params as $parameter => $value) {
+            if($parameter == 'json')
+                continue;
+
             if (is_array($value)) {
                 // If two or more parameters share the same name, they are sorted by their value
                 // Ref: Spec: 9.1.1 (1)

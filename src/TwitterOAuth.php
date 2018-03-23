@@ -481,7 +481,15 @@ class TwitterOAuth extends Config
                 break;
             case 'POST':
                 $options[CURLOPT_POST] = true;
-                $options[CURLOPT_POSTFIELDS] = Util::buildHttpQuery($postfields);
+                if(isset($postfields['json']))
+                {
+                    $options[CURLOPT_HTTPHEADER] = ['Content-Type: application/json', 'Accept: application/json', $authorization, 'Expect:'];
+                    $options[CURLOPT_POSTFIELDS] = json_encode($postfields['json']);
+                }
+                else
+                {
+                    $options[CURLOPT_POSTFIELDS] = Util::buildHttpQuery($postfields);    
+                }
                 break;
             case 'DELETE':
                 $options[CURLOPT_CUSTOMREQUEST] = 'DELETE';
